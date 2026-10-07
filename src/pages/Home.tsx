@@ -4,6 +4,7 @@ import { Step1Study } from '../components/intake/Step1Study';
 import { Step2Funding } from '../components/intake/Step2Funding';
 import { Step3Financial } from '../components/intake/Step3Financial';
 import { Step4Collateral } from '../components/intake/Step4Collateral';
+import Results from './Results';
 import { calculateTotalCost, calculateFundingGap, calculateFundingAvailable, formatINR } from '../lib/calc';
 import { Button } from '../components/ui/button';
 
@@ -69,23 +70,21 @@ function IntakeWizard() {
           {step === 2 && <Step2Funding onBack={() => setStep(1)} onNext={() => setStep(3)} />}
           {step === 3 && <Step3Financial onBack={() => setStep(2)} onNext={() => setStep(4)} />}
           {step === 4 && <Step4Collateral onBack={() => setStep(3)} onNext={() => setStep(5)} />}
-          {step === 5 && (
-            <div className="text-center py-10 space-y-4">
-              <h2 className="text-2xl font-bold mb-4">Results (Placeholder)</h2>
-              <p className="text-slate-500">The results page will be built in the next step.</p>
-              <Button onClick={() => setStep(4)} variant="outline" className="rounded-full">Back to Editor</Button>
-            </div>
-          )}
+          {step === 5 && <Results onBack={() => setStep(4)} />}
         </div>
       </div>
       
-      <div className="hidden md:block">
-        <SummaryPanel />
-      </div>
+      {step !== 5 && (
+        <>
+          <div className="hidden md:block">
+            <SummaryPanel />
+          </div>
 
-      <div className="md:hidden">
-        <SummaryPanel />
-      </div>
+          <div className="md:hidden">
+            <SummaryPanel />
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import type { Student, Study, Funding, FinancialProfile, CollateralItem } from '../lib/types';
 
@@ -32,7 +32,7 @@ export function IntakeProvider({ children }: { children: ReactNode }) {
   const [collateral, setCollateral] = useState<CollateralItem[]>([]);
   const [assumptions, setAssumptions] = useState<Assumptions>({ tenorYears: 10 });
 
-  const loadSampleProfile = () => {
+  const loadSampleProfile = useCallback(() => {
     setStudent({ gender: 'female', cibilScore: 710, coApplicantType: 'not specified' });
     setStudy({ 
       durationYears: 2, 
@@ -50,14 +50,16 @@ export function IntakeProvider({ children }: { children: ReactNode }) {
     setFinancialProfile({ assets: [], liabilities: [] });
     setCollateral([]);
     setAssumptions({ tenorYears: 10 });
-  };
+  }, []);
+
+  const value = useMemo(() => ({
+    student, study, funding, financialProfile, collateral, assumptions,
+    setStudent, setStudy, setFunding, setFinancialProfile, setCollateral, setAssumptions,
+    loadSampleProfile
+  }), [student, study, funding, financialProfile, collateral, assumptions, loadSampleProfile]);
 
   return (
-    <IntakeContext.Provider value={{
-      student, study, funding, financialProfile, collateral, assumptions,
-      setStudent, setStudy, setFunding, setFinancialProfile, setCollateral, setAssumptions,
-      loadSampleProfile
-    }}>
+    <IntakeContext.Provider value={value}>
       {children}
     </IntakeContext.Provider>
   );
