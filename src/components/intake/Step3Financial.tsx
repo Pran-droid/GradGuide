@@ -15,16 +15,18 @@ export function Step3Financial({ onNext, onBack }: { onNext: () => void, onBack:
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label>Student Annual Income (INR)</Label>
+          <Label htmlFor="studentIncome">Student Annual Income (INR)</Label>
           <Input 
+            id="studentIncome"
             type="number" 
             value={financialProfile.studentIncome ?? ''} 
             onChange={(e) => setFinancialProfile({ ...financialProfile, studentIncome: e.target.value ? parseFloat(e.target.value) : undefined })}
           />
         </div>
         <div className="space-y-2">
-          <Label>Co-Applicant Annual Income (INR)</Label>
+          <Label htmlFor="coApplicantIncome">Co-Applicant Annual Income (INR)</Label>
           <Input 
+            id="coApplicantIncome"
             type="number" 
             value={financialProfile.coApplicantIncome ?? ''} 
             onChange={(e) => setFinancialProfile({ ...financialProfile, coApplicantIncome: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -37,12 +39,12 @@ export function Step3Financial({ onNext, onBack }: { onNext: () => void, onBack:
         <div className="space-y-2">
           {financialProfile.assets?.map((a, i) => (
              <div key={i} className="flex gap-2 items-center">
-               <Input value={a.type} placeholder="Type" onChange={(e) => {
+               <Input value={a.type} placeholder="Type" aria-label="Asset Type" onChange={(e) => {
                  const newAssets = [...(financialProfile.assets || [])];
                  newAssets[i] = { ...a, type: e.target.value };
                  setFinancialProfile({ ...financialProfile, assets: newAssets });
                }} />
-               <Input type="number" value={a.value === 0 ? '' : a.value} placeholder="Value" onChange={(e) => {
+               <Input type="number" value={a.value === 0 ? '' : a.value} placeholder="Value" aria-label="Asset Value" onChange={(e) => {
                  const newAssets = [...(financialProfile.assets || [])];
                  newAssets[i] = { ...a, value: parseFloat(e.target.value) || 0 };
                  setFinancialProfile({ ...financialProfile, assets: newAssets });
@@ -66,12 +68,12 @@ export function Step3Financial({ onNext, onBack }: { onNext: () => void, onBack:
         <div className="space-y-2">
           {financialProfile.liabilities?.map((l, i) => (
              <div key={i} className="flex gap-2 items-center">
-               <Input value={l.type} placeholder="Type" onChange={(e) => {
+               <Input value={l.type} placeholder="Type" aria-label="Liability Type" onChange={(e) => {
                  const newLiabilities = [...(financialProfile.liabilities || [])];
                  newLiabilities[i] = { ...l, type: e.target.value };
                  setFinancialProfile({ ...financialProfile, liabilities: newLiabilities });
                }} />
-               <Input type="number" value={l.amount === 0 ? '' : l.amount} placeholder="Amount" onChange={(e) => {
+               <Input type="number" value={l.amount === 0 ? '' : l.amount} placeholder="Amount" aria-label="Liability Amount" onChange={(e) => {
                  const newLiabilities = [...(financialProfile.liabilities || [])];
                  newLiabilities[i] = { ...l, amount: parseFloat(e.target.value) || 0 };
                  setFinancialProfile({ ...financialProfile, liabilities: newLiabilities });

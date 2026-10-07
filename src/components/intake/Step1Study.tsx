@@ -18,7 +18,7 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
         <div className="space-y-2">
           <Label>Gender</Label>
           <Select value={student.gender || ''} onValueChange={(v) => setStudent({ ...student, gender: v as Gender })}>
-            <SelectTrigger><SelectValue placeholder="Select gender" /></SelectTrigger>
+            <SelectTrigger aria-label="Gender"><SelectValue placeholder="Select gender" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="male">Male</SelectItem>
               <SelectItem value="female">Female</SelectItem>
@@ -29,8 +29,9 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
         </div>
         
         <div className="space-y-2">
-          <Label>CIBIL Score (Optional)</Label>
+          <Label htmlFor="cibilScore">CIBIL Score (Optional)</Label>
           <Input 
+            id="cibilScore"
             type="number" 
             value={student.cibilScore || ''} 
             onChange={(e) => setStudent({ ...student, cibilScore: e.target.value ? parseInt(e.target.value) : undefined })}
@@ -41,7 +42,7 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
         <div className="space-y-2">
           <Label>Co-applicant Type</Label>
           <Select value={student.coApplicantType || ''} onValueChange={(v) => setStudent({ ...student, coApplicantType: v as CoApplicantType })}>
-            <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+            <SelectTrigger aria-label="Co-applicant Type"><SelectValue placeholder="Select type" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="salaried">Salaried</SelectItem>
               <SelectItem value="self-employed">Self-employed</SelectItem>
@@ -51,8 +52,9 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
         </div>
 
         <div className="space-y-2">
-          <Label>University Rank (Optional)</Label>
+          <Label htmlFor="universityRank">University Rank (Optional)</Label>
           <Input 
+            id="universityRank"
             type="number" 
             value={study.universityRank || ''} 
             onChange={(e) => setStudy({ ...study, universityRank: e.target.value ? parseInt(e.target.value) : undefined })}
@@ -70,7 +72,7 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
           <div className="space-y-2">
             <Label>Currency</Label>
             <Select value={study.currency || 'INR'} onValueChange={(v) => setStudy({ ...study, currency: v })}>
-              <SelectTrigger><SelectValue placeholder="Select currency" /></SelectTrigger>
+              <SelectTrigger aria-label="Currency"><SelectValue placeholder="Select currency" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="INR">INR (₹)</SelectItem>
                 <SelectItem value="USD">USD ($)</SelectItem>
@@ -82,8 +84,9 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
 
           {showExchangeRate && (
             <div className="space-y-2">
-              <Label>Exchange Rate to INR</Label>
+              <Label htmlFor="exchangeRate">Exchange Rate to INR</Label>
               <Input 
+                id="exchangeRate"
                 type="number" 
                 value={study.exchangeRateToINR || ''} 
                 onChange={(e) => setStudy({ ...study, exchangeRateToINR: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -93,8 +96,9 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
           )}
           
           <div className="space-y-2">
-            <Label>Total Tuition</Label>
+            <Label htmlFor="totalTuition">Total Tuition</Label>
             <Input 
+              id="totalTuition"
               type="number" 
               value={study.totalTuition ?? ''} 
               onChange={(e) => setStudy({ ...study, totalTuition: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -102,8 +106,9 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
           </div>
 
           <div className="space-y-2">
-            <Label>Duration (Years)</Label>
+            <Label htmlFor="durationYears">Duration (Years)</Label>
             <Input 
+              id="durationYears"
               type="number" 
               value={study.durationYears ?? ''} 
               onChange={(e) => setStudy({ ...study, durationYears: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -111,23 +116,25 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
           </div>
 
           <div className="space-y-2">
-            <Label>Living Cost Per Year</Label>
+            <Label htmlFor="livingCost">Living Cost Per Year</Label>
             <Input 
+              id="livingCost"
               type="number" 
               value={study.livingCostPerYear ?? ''} 
               onChange={(e) => setStudy({ ...study, livingCostPerYear: e.target.value ? parseFloat(e.target.value) : undefined })}
             />
-            {study.livingCostPerYear === undefined && <p className="text-xs text-orange-500">Living cost not entered, treated as ₹0</p>}
+            {study.livingCostPerYear === undefined && <p className="text-xs text-orange-700">Living cost not entered, treated as ₹0</p>}
           </div>
 
           <div className="space-y-2">
-            <Label>Other Costs (Optional)</Label>
+            <Label htmlFor="otherCosts">Other Costs (Optional)</Label>
             <Input 
+              id="otherCosts"
               type="number" 
               value={study.otherCosts ?? ''} 
               onChange={(e) => setStudy({ ...study, otherCosts: e.target.value ? parseFloat(e.target.value) : undefined })}
             />
-            {study.otherCosts === undefined && <p className="text-xs text-orange-500">Other costs not entered, treated as ₹0</p>}
+            {study.otherCosts === undefined && <p className="text-xs text-orange-700">Other costs not entered, treated as ₹0</p>}
           </div>
         </div>
       </div>
@@ -135,8 +142,9 @@ export function Step1Study({ onNext }: { onNext: () => void }) {
       <div className="border-t pt-6 mt-6 space-y-4">
         <h3 className="font-bold">Assumptions</h3>
         <div className="space-y-2 max-w-xs">
-          <Label>Tenor (Years)</Label>
+          <Label htmlFor="tenorYears">Tenor (Years)</Label>
           <Input 
+            id="tenorYears"
             type="number" 
             value={assumptions.tenorYears} 
             onChange={(e) => setAssumptions({ ...assumptions, tenorYears: e.target.value ? parseInt(e.target.value) : 10 })}

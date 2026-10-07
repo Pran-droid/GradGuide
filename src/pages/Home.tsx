@@ -20,18 +20,18 @@ function SummaryPanel() {
       
       <div className="space-y-4">
         <div>
-          <div className="text-sm text-slate-500 mb-1 uppercase font-bold text-[#F25C5C] text-[11px] tracking-wider">Total Cost</div>
+          <div className="text-sm text-slate-500 mb-1 uppercase font-bold text-[#D93838] text-[11px] tracking-wider">Total Cost</div>
           {totalCostResult === null ? (
             <div className="text-xl font-bold text-slate-400">₹ -</div>
           ) : typeof totalCostResult === 'object' ? (
-            <div className="text-sm text-orange-500 font-medium">Enter an exchange rate to calculate the funding gap</div>
+            <div className="text-sm text-orange-700 font-medium">Enter an exchange rate to calculate the funding gap</div>
           ) : (
             <div className="text-xl font-bold">₹ {formatINR(totalCostResult)}</div>
           )}
         </div>
 
         <div>
-          <div className="text-sm text-slate-500 mb-1 uppercase font-bold text-[#F25C5C] text-[11px] tracking-wider">Funding Gap (Loan Req.)</div>
+          <div className="text-sm text-slate-500 mb-1 uppercase font-bold text-[#D93838] text-[11px] tracking-wider">Funding Gap (Loan Req.)</div>
           {gapResult === null || typeof gapResult === 'object' ? (
              <div className="text-xl font-bold text-slate-400">₹ -</div>
           ) : (

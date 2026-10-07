@@ -142,13 +142,13 @@ export default function Results({ onBack }: { onBack: () => void }) {
         <Card className="p-4 bg-[#FEF7EF] border-none shadow-sm">
           <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Total Cost</div>
           {totalCostResult === null ? <div className="text-lg font-bold text-slate-400">-</div>
-           : typeof totalCostResult === 'object' ? <div className="text-xs text-orange-500 leading-tight">Exchange rate missing</div>
+           : typeof totalCostResult === 'object' ? <div className="text-xs text-orange-700 leading-tight">Exchange rate missing</div>
            : <div className="text-lg font-bold">₹ {formatINR(totalCostResult)}</div>}
         </Card>
         <Card className="p-4 bg-[#FEF7EF] border-none shadow-sm">
           <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Funding Gap</div>
           {parsedGap === null ? <div className="text-lg font-bold text-slate-400">-</div>
-           : <div className="text-lg font-bold text-[#F25C5C]">₹ {formatINR(parsedGap)}</div>}
+           : <div className="text-lg font-bold text-[#D93838]">₹ {formatINR(parsedGap)}</div>}
         </Card>
         <Card className="p-4 bg-[#FEF7EF] border-none shadow-sm">
           <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Net Worth</div>

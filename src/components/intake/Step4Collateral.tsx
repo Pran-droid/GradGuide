@@ -37,17 +37,17 @@ export function Step4Collateral({ onNext, onBack }: { onNext: () => void, onBack
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                <div className="space-y-2">
-                 <Label>Type / Description</Label>
-                 <Input value={item.type} onChange={(e) => updateItem(i, { type: e.target.value })} />
+                 <Label htmlFor={`col-type-${i}`}>Type / Description</Label>
+                 <Input id={`col-type-${i}`} value={item.type} onChange={(e) => updateItem(i, { type: e.target.value })} />
                </div>
                <div className="space-y-2">
-                 <Label>Estimated Value (INR)</Label>
-                 <Input type="number" value={item.estimatedValue || ''} onChange={(e) => updateItem(i, { estimatedValue: parseFloat(e.target.value) || 0 })} />
+                 <Label htmlFor={`col-val-${i}`}>Estimated Value (INR)</Label>
+                 <Input id={`col-val-${i}`} type="number" value={item.estimatedValue || ''} onChange={(e) => updateItem(i, { estimatedValue: parseFloat(e.target.value) || 0 })} />
                </div>
                <div className="space-y-2">
                  <Label>Property State</Label>
                  <Select value={item.propertyState} onValueChange={(v: any) => updateItem(i, { propertyState: v })}>
-                   <SelectTrigger><SelectValue/></SelectTrigger>
+                   <SelectTrigger aria-label="Property State"><SelectValue/></SelectTrigger>
                    <SelectContent>
                      <SelectItem value="Delhi">Delhi</SelectItem>
                      <SelectItem value="Maharashtra">Maharashtra</SelectItem>
@@ -58,7 +58,7 @@ export function Step4Collateral({ onNext, onBack }: { onNext: () => void, onBack
                <div className="space-y-2">
                  <Label>Property Type</Label>
                  <Select value={item.propertyType} onValueChange={(v: any) => updateItem(i, { propertyType: v })}>
-                   <SelectTrigger><SelectValue/></SelectTrigger>
+                   <SelectTrigger aria-label="Property Type"><SelectValue/></SelectTrigger>
                    <SelectContent>
                      <SelectItem value="apartment">Apartment</SelectItem>
                      <SelectItem value="other">Other</SelectItem>
@@ -68,7 +68,7 @@ export function Step4Collateral({ onNext, onBack }: { onNext: () => void, onBack
                <div className="space-y-2">
                  <Label>Property Status</Label>
                  <Select value={item.propertyStatus} onValueChange={(v: any) => updateItem(i, { propertyStatus: v })}>
-                   <SelectTrigger><SelectValue/></SelectTrigger>
+                   <SelectTrigger aria-label="Property Status"><SelectValue/></SelectTrigger>
                    <SelectContent>
                      <SelectItem value="new">New</SelectItem>
                      <SelectItem value="resale">Resale</SelectItem>

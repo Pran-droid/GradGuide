@@ -17,7 +17,8 @@ Based on the styling extracted from the GradGuide website.
 | :--- | :--- | :--- | :--- |
 | **Background** | `#FEF7EF` | `rgb(254, 247, 239)` | Main page background (warm off-white/cream). |
 | **Text (Primary)** | `#000000` | `rgb(0, 0, 0)` | Default text color. |
-| **Primary / Accent** | `#F25C5C` | `rgb(242, 92, 92)` | Used for italic emphasis in headings and eyebrow labels. |
+| **Primary / Accent** | `#F25C5C` | `rgb(242, 92, 92)` | Used for italic emphasis in headings and large elements. |
+| **Primary (Accessible)** | `#D93838` | `rgb(217, 56, 56)` | Darker coral for small text, badges, and links to meet 4.5:1 contrast against cream background. |
 | **Button Background**| `#333333` | `rgb(51, 51, 51)` | Default dark button backgrounds. |
 | **Surface / Card** | `transparent`* | `rgba(0, 0, 0, 0)`* | *Unable to identify with confidence. Cards may just use borders or subtle shadows on the main background.* |
 
