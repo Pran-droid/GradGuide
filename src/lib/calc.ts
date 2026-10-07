@@ -1,4 +1,4 @@
-import { Study, Funding, FinancialProfile } from './types';
+import type { Study, Funding, FinancialProfile } from './types';
 
 type CalcResult = number | null | { error: 'EXCHANGE_RATE_REQUIRED' };
 
