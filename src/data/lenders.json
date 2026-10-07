@@ -1,0 +1,370 @@
+{
+  "meta": {
+    "source": "GradGuide Education Loan Lender Database (supplied with the assignment)",
+    "disclaimer": "Based only on the supplied dataset. Not a complete or current representation of any lender's policy. Where the dataset has no information, the app must report 'cannot assess' rather than guess.",
+    "currency": "INR",
+    "rate_unit": "percent_per_annum"
+  },
+
+  "lenders": [
+    {
+      "id": "boi",
+      "name": "BOI",
+      "min_cibil": 670,
+      "products": [
+        {
+          "type": "non_collateral",
+          "available": false,
+          "note": "Not possible"
+        },
+        {
+          "type": "collateral",
+          "available": true,
+          "rate_min": 9.0,
+          "rate_max": 9.0,
+          "conditions": {},
+          "rate_overrides": [
+            { "when": { "gender": "female" }, "rate_min": 8.6, "rate_max": 8.6, "note": "Girls: 8.60%" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bob",
+      "name": "BOB",
+      "min_cibil": 700,
+      "products": [
+        {
+          "type": "non_collateral",
+          "available": true,
+          "rate_min": 8.45,
+          "rate_max": 8.45,
+          "conditions": { "university_rank_max": 100 },
+          "note": "Top 100 universities"
+        },
+        {
+          "type": "collateral",
+          "available": true,
+          "rate_min": 8.95,
+          "rate_max": 8.95,
+          "conditions": { "gender": "male" },
+          "note": "Boys"
+        },
+        {
+          "type": "collateral",
+          "available": true,
+          "rate_min": 8.75,
+          "rate_max": 8.75,
+          "conditions": { "gender": "female" },
+          "note": "Girls"
+        }
+      ]
+    },
+    {
+      "id": "sbi",
+      "name": "SBI",
+      "min_cibil": 750,
+      "products": [
+        {
+          "type": "non_collateral",
+          "available": true,
+          "rate_min": 9.4,
+          "rate_max": 9.4,
+          "conditions": { "university_rank_max": 100 },
+          "note": "Top 100 universities"
+        },
+        {
+          "type": "collateral",
+          "available": true,
+          "rate_min": 8.4,
+          "rate_max": 8.4,
+          "conditions": {}
+        }
+      ]
+    },
+    {
+      "id": "credila",
+      "name": "Credila",
+      "min_cibil": null,
+      "products": [
+        {
+          "type": "non_collateral",
+          "available": true,
+          "rate_min": 10.75,
+          "rate_max": 10.75,
+          "conditions": {}
+        },
+        {
+          "type": "collateral",
+          "available": true,
+          "rate_min": 9.25,
+          "rate_max": 9.75,
+          "conditions": {}
+        }
+      ]
+    },
+    {
+      "id": "auxilo",
+      "name": "Auxilo",
+      "min_cibil": null,
+      "products": [
+        {
+          "type": "non_collateral",
+          "available": true,
+          "rate_min": 10.25,
+          "rate_max": 10.25,
+          "conditions": {}
+        },
+        {
+          "type": "collateral",
+          "available": true,
+          "rate_min": 10.0,
+          "rate_max": 10.0,
+          "conditions": {}
+        }
+      ]
+    }
+  ],
+
+  "documents": {
+    "global_rules": ["All documents should be self-attested"],
+    "items": [
+      {
+        "id": "pan_card",
+        "label": "PAN Card",
+        "group": "basic",
+        "applies_to": ["student", "co_applicant"],
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "proof_of_residence",
+        "label": "Proof of residence",
+        "group": "basic",
+        "applies_to": ["student", "co_applicant"],
+        "routes": ["collateral", "non_collateral"],
+        "accepted_options": [
+          "Voter ID",
+          "Passport",
+          "Electricity Bill",
+          "Telephone Bill",
+          "Ration Card",
+          "Bank account statement",
+          "Aadhaar"
+        ]
+      },
+      {
+        "id": "bank_statement_6m",
+        "label": "Bank account statement - last 6 months (personal / salary)",
+        "group": "basic",
+        "applies_to": ["student", "co_applicant"],
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "asset_liability_statement",
+        "label": "Personal Asset & Liability Statement",
+        "group": "basic",
+        "applies_to": ["student", "co_applicant"],
+        "routes": ["collateral", "non_collateral"]
+      },
+
+      {
+        "id": "marksheets_10_12_degree",
+        "label": "10th, 12th and Degree marksheets / certificates",
+        "group": "academic",
+        "applies_to": ["student"],
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "admission_proof",
+        "label": "Proof of admission showing total course duration",
+        "group": "academic",
+        "applies_to": ["student"],
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "fee_structure",
+        "label": "Fee structure (I-20 for US)",
+        "group": "academic",
+        "applies_to": ["student"],
+        "routes": ["collateral", "non_collateral"],
+        "note": "I-20 for US, if available"
+      },
+      {
+        "id": "test_score_card",
+        "label": "IELTS / GMAT / GRE score card",
+        "group": "academic",
+        "applies_to": ["student"],
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "university_ranking_printout",
+        "label": "University ranking print-out",
+        "group": "academic",
+        "applies_to": ["student"],
+        "routes": ["collateral", "non_collateral"]
+      },
+
+      {
+        "id": "salary_slips_3m",
+        "label": "Latest salary slips - last 3 months",
+        "group": "co_applicant_salaried",
+        "applies_to": ["co_applicant"],
+        "co_applicant_type": "salaried",
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "form_16_2y",
+        "label": "Form 16 - last 2 years",
+        "group": "co_applicant_salaried",
+        "applies_to": ["co_applicant"],
+        "co_applicant_type": "salaried",
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "employer_id_card",
+        "label": "Employer ID card",
+        "group": "co_applicant_salaried",
+        "applies_to": ["co_applicant"],
+        "co_applicant_type": "salaried",
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "itr_2y",
+        "label": "ITR - last 2 years",
+        "group": "co_applicant_salaried",
+        "applies_to": ["co_applicant"],
+        "co_applicant_type": "salaried",
+        "routes": ["collateral", "non_collateral"]
+      },
+
+      {
+        "id": "itr_3y",
+        "label": "ITR - last 3 years",
+        "group": "co_applicant_self_employed",
+        "applies_to": ["co_applicant"],
+        "co_applicant_type": "self_employed",
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "balance_sheet_pl_3y",
+        "label": "Balance sheet and Profit & Loss account - last 3 years",
+        "group": "co_applicant_self_employed",
+        "applies_to": ["co_applicant"],
+        "co_applicant_type": "self_employed",
+        "routes": ["collateral", "non_collateral"]
+      },
+      {
+        "id": "business_address_proof",
+        "label": "Proof of business address",
+        "group": "co_applicant_self_employed",
+        "applies_to": ["co_applicant"],
+        "co_applicant_type": "self_employed",
+        "routes": ["collateral", "non_collateral"]
+      },
+
+      {
+        "id": "property_title_deed",
+        "label": "Property title deed and registered sale agreement",
+        "group": "property",
+        "routes": ["collateral"]
+      },
+      {
+        "id": "original_registration_receipt",
+        "label": "Original registration receipt",
+        "group": "property",
+        "routes": ["collateral"]
+      },
+      {
+        "id": "allotment_letter",
+        "label": "Allotment letter by Municipal Corporation / authorised government authority",
+        "group": "property",
+        "routes": ["collateral"],
+        "condition": { "text": "if applicable" }
+      },
+      {
+        "id": "chain_of_sale_deeds_ec_30y",
+        "label": "Previous chain of sale deeds / Encumbrance Certificate (EC) of last 30 years",
+        "group": "property",
+        "routes": ["collateral"]
+      },
+      {
+        "id": "property_tax_or_electricity_bill",
+        "label": "Latest property tax bill or electricity bill with same address",
+        "group": "property",
+        "routes": ["collateral"]
+      },
+      {
+        "id": "approved_building_plan_or_plot_layout",
+        "label": "Municipality-approved building plan or plot layout",
+        "group": "property",
+        "routes": ["collateral"]
+      },
+      {
+        "id": "occupancy_certificate",
+        "label": "Occupancy Certificate (OC)",
+        "group": "property",
+        "routes": ["collateral"],
+        "condition": { "property_type": "apartment", "text": "if apartment" }
+      },
+
+      {
+        "id": "delhi_conveyance_deed_dda_allotment",
+        "label": "Conveyance deed and DDA allotment letter",
+        "group": "property_state",
+        "routes": ["collateral"],
+        "condition": { "property_state": "Delhi" }
+      },
+
+      {
+        "id": "mh_builder_society_noc",
+        "label": "NOC from builder / society in bank format, with Index II",
+        "group": "property_state",
+        "routes": ["collateral"],
+        "condition": { "property_state": "Maharashtra" }
+      },
+      {
+        "id": "mh_share_certificate",
+        "label": "Share certificate",
+        "group": "property_state",
+        "routes": ["collateral"],
+        "condition": { "property_state": "Maharashtra", "property_status": "resale", "text": "for resale" }
+      },
+      {
+        "id": "mh_society_conveyance_deed",
+        "label": "Society conveyance deed",
+        "group": "property_state",
+        "routes": ["collateral"],
+        "condition": { "property_state": "Maharashtra" }
+      },
+      {
+        "id": "mh_builder_poa_confirmation",
+        "label": "Confirmation of POA by builder",
+        "group": "property_state",
+        "routes": ["collateral"],
+        "condition": { "property_state": "Maharashtra" }
+      },
+      {
+        "id": "mh_commencement_certificate",
+        "label": "Commencement certificate",
+        "group": "property_state",
+        "routes": ["collateral"],
+        "condition": { "property_state": "Maharashtra", "property_status": "new", "text": "if new property" }
+      },
+      {
+        "id": "mh_certified_board_resolution_poa",
+        "label": "Certified board resolution / POA from builder",
+        "group": "property_state",
+        "routes": ["collateral"],
+        "condition": { "property_state": "Maharashtra" }
+      }
+    ]
+  },
+
+  "supplementary_documents": {
+    "note": "Named in the assignment brief but NOT in the lender database. Accept as uploads and use for the consistency check, but never present them as lender requirements.",
+    "items": [
+      { "id": "ca_net_worth_certificate", "label": "CA Net Worth Certificate" },
+      { "id": "salary_slips_other", "label": "Other income proof (optional)" }
+    ]
+  }
+}
