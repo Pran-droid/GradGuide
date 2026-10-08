@@ -30,3 +30,8 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+.env.*
+
+# Custom exclusions
+scratch/
+docs/reference/

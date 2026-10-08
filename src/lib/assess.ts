@@ -1,5 +1,7 @@
-import type { Student, Study } from './types';
-import lendersData from '../data/lenders.json';
+import rawLendersData from '../data/lenders.json';
+import type { Student, Study, LendersData } from './types';
+
+const lendersData = rawLendersData as unknown as LendersData;
 
 export type AssessmentStatus = 'meets' | 'does_not_meet' | 'cannot_assess';
 
@@ -13,7 +15,8 @@ export type ReasonCode =
   | 'CIBIL_UNKNOWN'
   | 'CIBIL_BELOW_MIN'
   | 'GAP_NOT_CALCULABLE'
-  | 'RATE_OVERRIDE_NOTE';
+  | 'RATE_OVERRIDE_NOTE'
+  | 'UNSUPPORTED_CRITERION';
 
 export interface Reason {
   code: ReasonCode;
@@ -113,7 +116,7 @@ export function assessLenders(
       
       // 1. Available check
       if (product.available === false) {
-        reasons.push({ code: 'NOT_AVAILABLE', message: (product as any).note || 'Not possible' });
+        reasons.push({ code: 'NOT_AVAILABLE', message: product.note || 'Not possible' });
         productStatus = 'does_not_meet';
       }
       
@@ -121,7 +124,7 @@ export function assessLenders(
       let shouldOmit = false;
       if (product.conditions) {
         if ('university_rank_max' in product.conditions) {
-          const maxRank = (product.conditions as any).university_rank_max;
+          const maxRank = product.conditions.university_rank_max;
           if (maxRank !== undefined) {
             if (rank === undefined || isNaN(rank)) {
               reasons.push({ code: 'RANK_UNKNOWN', message: 'university rank not provided', field: 'universityRank' });
@@ -143,6 +146,14 @@ export function assessLenders(
             } else {
               shouldOmit = true;
             }
+          }
+        }
+        
+        // Unsupported criteria check
+        for (const key of Object.keys(product.conditions)) {
+          if (key !== 'university_rank_max' && key !== 'gender') {
+            reasons.push({ code: 'UNSUPPORTED_CRITERION', message: `unsupported criterion: ${key}` });
+            if (productStatus !== 'does_not_meet') productStatus = 'cannot_assess';
           }
         }
       }
@@ -167,8 +178,8 @@ export function assessLenders(
       let finalRateMin = product.rate_min;
       let finalRateMax = product.rate_max;
       
-      if ((product as any).rate_overrides) {
-        for (const override of (product as any).rate_overrides) {
+      if (product.rate_overrides) {
+        for (const override of product.rate_overrides) {
           let match = true;
           if (override.when.gender) {
             if (override.when.gender !== gender) {
@@ -203,7 +214,7 @@ export function assessLenders(
         rate_max: finalRateMax,
         reasons,
         what_would_change: whatWouldChange,
-        condition_gender: (product.conditions as any)?.gender
+        condition_gender: product.conditions?.gender
       });
     }
   }

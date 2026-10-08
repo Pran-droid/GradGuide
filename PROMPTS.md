@@ -29,7 +29,7 @@ Inspect the computed styles and extract the design tokens that define its look:
 - Heading style (note: headings have an italic emphasised phrase), eyebrow labels (small uppercase), stat numbers, buttons, cards, form fields, tags (e.g. CORE / SELECTIVE badges)
 - Border radius, shadows, spacing scale, section padding, max content width
 - Header/nav layout and footer layout
-Save screenshots of the hero, a card section, and the form section into docs/reference/.
+Save screenshots of the hero, a card section, and the form section.
 Write everything into docs/design-tokens.md as a table, with hex values and Google Font names where you can identify them.
 Then create a skill at .agent/skills/gradguide-brand/SKILL.md (with YAML front-matter: name, description) that tells future agents: use these tokens, this tone of voice (plain, honest, trust-focused), these component patterns, and never copy GradGuide's logo, photos, testimonials or copy.
 If you can't identify something with confidence, say so in the file instead of guessing.
@@ -46,7 +46,7 @@ Scaffold the project in the current folder following GEMINI.md and docs/SPEC.md 
 - Folder structure: src/data, src/lib, src/components, src/pages, tests/
 - Put lenders.json in src/data/ and SPEC.md in docs/
 Then build an app shell only: a header with a text wordmark "Education Loan Assessment" (no GradGuide logo), a simple nav, a footer, and an empty home page, styled with the brand tokens. Add the shadcn components we'll need: button, input, label, select, card, tabs, badge, table, dialog, progress, alert.
-Run the dev server, open it in the browser, take a screenshot at desktop and mobile width, and check it against docs/reference/. Fix visible mismatches.
+Run the dev server, open it in the browser, take a screenshot at desktop and mobile width, and check it against reference designs. Fix visible mismatches.
 Summarise what you set up and any assumptions.
 ```
 

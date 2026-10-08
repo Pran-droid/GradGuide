@@ -166,4 +166,37 @@ describe('Lender Assessment (Section 5 specs)', () => {
     const resCibil749 = assessLenders({ gender: 'male', cibilScore: 749 }, {}, 100000);
     expect(resCibil749.find(r => r.lender === 'SBI' && r.product_type === 'collateral')?.status).toBe('does_not_meet');
   });
+
+  it('unsupported criteria => cannot_assess (UNSUPPORTED_CRITERION)', async () => {
+    // We'll temporarily add a fake lender directly to the imported data
+    const lendersData = await import('../src/data/lenders.json');
+    const originalLength = lendersData.default.lenders.length;
+    lendersData.default.lenders.push({
+      name: 'FakeLender',
+      min_cibil: 700,
+      products: [
+        {
+          type: 'non_collateral',
+          rate_min: 10.0,
+          rate_max: 10.0,
+          conditions: {
+            minimum_income: 500000,
+            university_rank_max: 100
+          }
+        }
+      ]
+    });
+
+    const res = assessLenders({ gender: 'male', cibilScore: 750 }, { universityRank: 50 }, 100000);
+    const fake = res.find(r => r.lender === 'FakeLender');
+    
+    expect(fake?.status).toBe('cannot_assess');
+    expect(fake?.reasons).toContainEqual(expect.objectContaining({ 
+      code: 'UNSUPPORTED_CRITERION',
+      message: 'unsupported criterion: minimum_income'
+    }));
+
+    // Cleanup
+    lendersData.default.lenders.length = originalLength;
+  });
 });

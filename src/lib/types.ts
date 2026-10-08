@@ -52,3 +52,37 @@ export interface CollateralItem {
   propertyType: 'apartment' | 'other';
   propertyStatus: 'new' | 'resale';
 }
+
+export interface LenderCondition {
+  university_rank_max?: number;
+  gender?: Gender | string;
+  [key: string]: unknown;
+}
+
+export interface LenderRateOverride {
+  when: {
+    gender?: Gender | string;
+  };
+  rate_min: number;
+  rate_max: number;
+}
+
+export interface LenderProduct {
+  type: string;
+  rate_min?: number;
+  rate_max?: number;
+  available?: boolean;
+  note?: string;
+  conditions?: LenderCondition;
+  rate_overrides?: LenderRateOverride[];
+}
+
+export interface Lender {
+  name: string;
+  min_cibil: number | null;
+  products: LenderProduct[];
+}
+
+export interface LendersData {
+  lenders: Lender[];
+}

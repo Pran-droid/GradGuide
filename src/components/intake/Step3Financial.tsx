@@ -7,7 +7,7 @@ import { calculateNetWorth, formatINR } from '../../lib/calc';
 export function Step3Financial({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
   const { financialProfile, setFinancialProfile } = useIntake();
 
-  const netWorth = calculateNetWorth(financialProfile as any);
+  const netWorth = calculateNetWorth(financialProfile);
 
   return (
     <div className="space-y-6">

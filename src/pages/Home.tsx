@@ -12,8 +12,8 @@ import { Button } from '../components/ui/button';
 
 function SummaryPanel() {
   const { study, funding } = useIntake();
-  const totalCostResult = calculateTotalCost(study as any);
-  const fundingAvailable = calculateFundingAvailable(funding as any);
+  const totalCostResult = calculateTotalCost(study);
+  const fundingAvailable = calculateFundingAvailable(funding);
   const gapResult = calculateFundingGap(totalCostResult, fundingAvailable);
 
   return (

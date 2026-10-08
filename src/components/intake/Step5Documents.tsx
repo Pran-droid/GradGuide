@@ -115,12 +115,12 @@ export function Step5Documents({ onBack, onNext }: { onBack: () => void, onNext:
   const [tolerancePerc, setTolerancePerc] = useState(10);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   
-  const totalCostResult = calculateTotalCost(study as any);
-  const fundingAvailable = calculateFundingAvailable(funding as any);
+  const totalCostResult = calculateTotalCost(study);
+  const fundingAvailable = calculateFundingAvailable(funding);
   const gapResult = calculateFundingGap(totalCostResult, fundingAvailable);
-  const netWorth = calculateNetWorth(financialProfile as any);
+  const netWorth = calculateNetWorth(financialProfile);
   
-  const assessmentResults = assessLenders(student as any, study as any, gapResult);
+  const assessmentResults = assessLenders(student, study, gapResult);
   
   const isCollateralRelevant = collateral.reduce((sum, c) => sum + (c.estimatedValue || 0), 0) > 0;
   const isNonCollateralRelevant = assessmentResults.filter(r => r.product_type === 'non_collateral').some(r => r.status === 'meets' || r.status === 'cannot_assess');

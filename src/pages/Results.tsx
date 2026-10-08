@@ -5,6 +5,7 @@ import { assessLenders } from '../lib/assess';
 import type { AssessmentResult } from '../lib/assess';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
+import { ScenarioComparison } from '../components/intake/ScenarioComparison';
 
 function Badge({ status }: { status: AssessmentResult['status'] }) {
   if (status === 'meets') return <span className="px-2 py-1 text-xs font-bold rounded-full bg-green-100 text-green-800">Criteria met</span>;
@@ -52,7 +53,7 @@ function LenderCard({ result, gap, tenor, requiresCollateral = false }: { result
           <div className="font-medium">{rateText}</div>
         </div>
         <div>
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Est. EMI ({tenor} yrs)</div>
+          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Est. EMI ({tenor} yrs) *</div>
           <div className="font-medium">{emiText}</div>
         </div>
       </div>
@@ -91,15 +92,15 @@ export default function Results({ onBack }: { onBack: () => void }) {
   const { student, study, funding, financialProfile, collateral, assumptions } = useIntake();
   const [showCollateral, setShowCollateral] = useState(false);
   
-  const totalCostResult = calculateTotalCost(study as any);
-  const fundingAvailable = calculateFundingAvailable(funding as any);
+  const totalCostResult = calculateTotalCost(study);
+  const fundingAvailable = calculateFundingAvailable(funding);
   const gapResult = calculateFundingGap(totalCostResult, fundingAvailable);
-  const netWorth = calculateNetWorth(financialProfile as any);
+  const netWorth = calculateNetWorth(financialProfile);
   
   const totalCollateral = collateral.reduce((sum, c) => sum + (c.estimatedValue || 0), 0);
   
   // Assessment
-  const assessmentResults = assessLenders(student as any, study as any, gapResult);
+  const assessmentResults = assessLenders(student, study, gapResult);
   
   const collateralResults = assessmentResults.filter(r => r.product_type === 'collateral');
   const nonCollateralResults = assessmentResults.filter(r => r.product_type === 'non_collateral');
@@ -187,6 +188,9 @@ export default function Results({ onBack }: { onBack: () => void }) {
               ) : (
                 <p className="text-sm text-orange-600 font-medium">Collateral routes need a pledged asset. None entered; these show lender criteria only.</p>
               )}
+              <p className="text-xs text-slate-600 mt-2">
+                * EMI figures are estimates. They assume repayment starts immediately on the loan amount and exclude interest during the study period (moratorium) and lender fees.
+              </p>
             </div>
             
             {isCollateralRelevant && parsedGap !== null ? (
@@ -221,6 +225,9 @@ export default function Results({ onBack }: { onBack: () => void }) {
             <p className="text-sm text-slate-500">
               {isNonCollateralRelevant ? 'May be relevant based on your profile.' : 'Unlikely to be relevant (no products meet criteria).'}
             </p>
+            <p className="text-xs text-slate-600 mt-2">
+              * EMI figures are estimates. They assume repayment starts immediately on the loan amount and exclude interest during the study period (moratorium) and lender fees.
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {nonCollateralResults.map((r, i) => (
@@ -228,6 +235,10 @@ export default function Results({ onBack }: { onBack: () => void }) {
             ))}
           </div>
         </div>
+      </div>
+
+      <div className="border-t pt-8 mt-8">
+        <ScenarioComparison />
       </div>
 
       <div className="text-center text-xs text-slate-400 mt-12 pb-8 border-t pt-8">
