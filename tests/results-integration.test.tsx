@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { render, screen, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import Results from '../src/pages/Results';
-import { IntakeProvider, useIntake } from '../src/store/IntakeContext';
+import { IntakeProvider } from '../src/store/IntakeProvider';
+import { useIntake } from '../src/store/useIntake';
 
 function TestWrapper() {
   const { loadSampleProfile, student } = useIntake();

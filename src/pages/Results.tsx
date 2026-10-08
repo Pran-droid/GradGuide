@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIntake } from '../store/IntakeContext';
+import { useIntake } from '../store/useIntake';
 import { calculateTotalCost, calculateFundingAvailable, calculateFundingGap, calculateNetWorth, formatINR, calculateEMI } from '../lib/calc';
 import { assessLenders } from '../lib/assess';
 import type { AssessmentResult } from '../lib/assess';

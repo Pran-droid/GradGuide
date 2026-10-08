@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import Results from '../src/pages/Results';
-import { IntakeProvider } from '../src/store/IntakeContext';
+import { IntakeProvider } from '../src/store/IntakeProvider';
 import * as calcModule from '../src/lib/calc';
 
 // Mock evaluate to return specific test values

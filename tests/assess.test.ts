@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { assessLenders } from '../src/lib/assess';
-import { Student, Study } from '../src/lib/types';
+import { Student } from '../src/lib/types';
 
 describe('Lender Assessment (Section 5 specs)', () => {
   it('BOI collateral female 8.60% vs default 9.00%', () => {

@@ -1,4 +1,4 @@
-import { useIntake } from '../../store/IntakeContext';
+import { useIntake } from '../../store/useIntake';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';

@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { IntakeProvider, useIntake } from '../store/IntakeContext';
+import { IntakeProvider } from '../store/IntakeProvider';
+import { useIntake } from '../store/useIntake';
 import { Step1Study } from '../components/intake/Step1Study';
 import { Step2Funding } from '../components/intake/Step2Funding';
 import { Step3Financial } from '../components/intake/Step3Financial';
 import { Step4Collateral } from '../components/intake/Step4Collateral';
+import { Step5Documents } from '../components/intake/Step5Documents';
 import Results from './Results';
 import { calculateTotalCost, calculateFundingGap, calculateFundingAvailable, formatINR } from '../lib/calc';
 import { Button } from '../components/ui/button';
@@ -60,7 +62,7 @@ function IntakeWizard() {
         </div>
         
         <div className="flex gap-2 mb-8">
-          {[1, 2, 3, 4].map(s => (
+          {[1, 2, 3, 4, 5, 6].map(s => (
             <div key={s} className={`h-2 flex-1 rounded-full ${step >= s ? 'bg-[#F25C5C]' : 'bg-slate-200'}`} />
           ))}
         </div>
@@ -70,11 +72,12 @@ function IntakeWizard() {
           {step === 2 && <Step2Funding onBack={() => setStep(1)} onNext={() => setStep(3)} />}
           {step === 3 && <Step3Financial onBack={() => setStep(2)} onNext={() => setStep(4)} />}
           {step === 4 && <Step4Collateral onBack={() => setStep(3)} onNext={() => setStep(5)} />}
-          {step === 5 && <Results onBack={() => setStep(4)} />}
+          {step === 5 && <Step5Documents onBack={() => setStep(4)} onNext={() => setStep(6)} />}
+          {step === 6 && <Results onBack={() => setStep(5)} />}
         </div>
       </div>
       
-      {step !== 5 && (
+      {step !== 6 && (
         <>
           <div className="hidden md:block">
             <SummaryPanel />
