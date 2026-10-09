@@ -101,12 +101,13 @@ export function ScenarioComparison() {
     });
 
     const tenor = scenario.tenorYears || 10;
+    const moratoriumYears = assumptions.moratoriumEnabled ? (sStudy.durationYears || 0) : 0;
     const isGapNull = typeof gap !== 'number';
     const parsedGap = isGapNull ? 0 : gap;
 
     // minEmi and maxEmi are based ONLY on "meets" products
-    const minEmi = !isGapNull && parsedGap > 0 && lowestMinRateMeets !== Infinity ? calculateEMI(parsedGap, lowestMinRateMeets, tenor) : null;
-    const maxEmi = !isGapNull && parsedGap > 0 && lowestMaxRateMeets !== Infinity ? calculateEMI(parsedGap, lowestMaxRateMeets, tenor) : null;
+    const minEmi = !isGapNull && parsedGap > 0 && lowestMinRateMeets !== Infinity ? calculateEMI(parsedGap, lowestMinRateMeets, tenor, moratoriumYears) : null;
+    const maxEmi = !isGapNull && parsedGap > 0 && lowestMaxRateMeets !== Infinity ? calculateEMI(parsedGap, lowestMaxRateMeets, tenor, moratoriumYears) : null;
 
     return { 
       totalCost, 
@@ -169,7 +170,7 @@ export function ScenarioComparison() {
         <div>
           <h3 className="text-xl font-bold">Scenario Comparison</h3>
           <p className="text-xs text-slate-600 mt-1 max-w-xl">
-            * EMI figures are estimates. They assume repayment starts immediately on the loan amount and exclude interest during the study period (moratorium) and lender fees.
+            * EMI figures are estimates. They assume repayment starts immediately on the loan amount {assumptions.moratoriumEnabled ? 'but include' : 'and exclude'} interest during the study period (moratorium) and lender fees.
           </p>
         </div>
         {scenarios.length < 3 && (

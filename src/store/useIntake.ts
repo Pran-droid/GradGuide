@@ -1,8 +1,10 @@
 import { createContext, useContext } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import type { Student, Study, Funding, FinancialProfile, CollateralItem } from '../lib/types';
 
 export interface Assumptions {
   tenorYears: number;
+  moratoriumEnabled?: boolean;
 }
 
 export interface UploadedFile {
@@ -19,13 +21,13 @@ export interface IntakeState {
   collateral: CollateralItem[];
   uploads: Uploads;
   assumptions: Assumptions;
-  setStudent: (s: Partial<Student>) => void;
-  setStudy: (s: Partial<Study>) => void;
-  setFunding: (f: Partial<Funding>) => void;
-  setFinancialProfile: (fp: Partial<FinancialProfile>) => void;
-  setCollateral: (c: CollateralItem[]) => void;
-  setUploads: (u: Uploads) => void;
-  setAssumptions: (a: Assumptions) => void;
+  setStudent: Dispatch<SetStateAction<Partial<Student>>>;
+  setStudy: Dispatch<SetStateAction<Partial<Study>>>;
+  setFunding: Dispatch<SetStateAction<Partial<Funding>>>;
+  setFinancialProfile: Dispatch<SetStateAction<Partial<FinancialProfile>>>;
+  setCollateral: Dispatch<SetStateAction<CollateralItem[]>>;
+  setUploads: Dispatch<SetStateAction<Uploads>>;
+  setAssumptions: Dispatch<SetStateAction<Assumptions>>;
   loadSampleProfile: () => void;
 }
 

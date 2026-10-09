@@ -35,3 +35,4 @@ dist-ssr
 # Custom exclusions
 scratch/
 docs/reference/
+lh*.json

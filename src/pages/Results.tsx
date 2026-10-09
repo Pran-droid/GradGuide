@@ -13,16 +13,16 @@ function Badge({ status }: { status: AssessmentResult['status'] }) {
   return <span className="px-2 py-1 text-xs font-bold rounded-full bg-red-100 text-red-800">Criteria not met</span>;
 }
 
-function LenderCard({ result, gap, tenor, requiresCollateral = false }: { result: AssessmentResult, gap: number | null, tenor: number, requiresCollateral?: boolean }) {
+function LenderCard({ result, gap, tenor, moratorium = 0, requiresCollateral = false }: { result: AssessmentResult, gap: number | null, tenor: number, moratorium?: number, requiresCollateral?: boolean }) {
   let emiText: React.ReactNode = <span className="text-xs text-slate-400 font-normal">Loan amount not calculable yet</span>;
   if (gap !== null) {
     if (result.rate_min !== undefined && result.rate_max !== undefined) {
       if (result.rate_min === result.rate_max) {
-        const emi = calculateEMI(gap, result.rate_min, tenor);
+        const emi = calculateEMI(gap, result.rate_min, tenor, moratorium);
         emiText = emi ? `₹ ${formatINR(emi)} / mo` : 'N/A';
       } else {
-        const minEmi = calculateEMI(gap, result.rate_min, tenor);
-        const maxEmi = calculateEMI(gap, result.rate_max, tenor);
+        const minEmi = calculateEMI(gap, result.rate_min, tenor, moratorium);
+        const maxEmi = calculateEMI(gap, result.rate_max, tenor, moratorium);
         emiText = minEmi && maxEmi ? `₹ ${formatINR(minEmi)} - ₹ ${formatINR(maxEmi)} / mo` : 'N/A';
       }
     } else {
@@ -97,6 +97,8 @@ export default function Results({ onBack }: { onBack: () => void }) {
   const gapResult = calculateFundingGap(totalCostResult, fundingAvailable);
   const netWorth = calculateNetWorth(financialProfile);
   
+  const moratoriumYears = assumptions.moratoriumEnabled ? (study.durationYears || 0) : 0;
+  
   const totalCollateral = collateral.reduce((sum, c) => sum + (c.estimatedValue || 0), 0);
   
   // Assessment
@@ -157,8 +159,9 @@ export default function Results({ onBack }: { onBack: () => void }) {
            : <div className="text-lg font-bold">₹ {formatINR(netWorth)}</div>}
         </Card>
         <Card className="p-4 bg-slate-50 border-none shadow-sm">
-          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Tenor Assumption</div>
+          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Assumptions</div>
           <div className="text-lg font-bold">{assumptions.tenorYears} Years</div>
+          {assumptions.moratoriumEnabled && <div className="text-xs text-slate-500 font-medium leading-tight mt-1">Includes moratorium</div>}
         </Card>
       </div>
 
@@ -189,7 +192,7 @@ export default function Results({ onBack }: { onBack: () => void }) {
                 <p className="text-sm text-orange-600 font-medium">Collateral routes need a pledged asset. None entered; these show lender criteria only.</p>
               )}
               <p className="text-xs text-slate-600 mt-2">
-                * EMI figures are estimates. They assume repayment starts immediately on the loan amount and exclude interest during the study period (moratorium) and lender fees.
+                * EMI figures are estimates. They assume repayment starts immediately on the loan amount {assumptions.moratoriumEnabled ? 'but include' : 'and exclude'} interest during the study period (moratorium) and lender fees.
               </p>
             </div>
             
@@ -213,7 +216,7 @@ export default function Results({ onBack }: { onBack: () => void }) {
           {(isCollateralRelevant || showCollateral) && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               {collateralResults.map((r, i) => (
-                <LenderCard key={i} result={r} gap={parsedGap} tenor={assumptions.tenorYears} requiresCollateral={!isCollateralRelevant} />
+                <LenderCard key={i} result={r} gap={parsedGap} tenor={assumptions.tenorYears} moratorium={moratoriumYears} requiresCollateral={!isCollateralRelevant} />
               ))}
             </div>
           )}
@@ -226,12 +229,12 @@ export default function Results({ onBack }: { onBack: () => void }) {
               {isNonCollateralRelevant ? 'May be relevant based on your profile.' : 'Unlikely to be relevant (no products meet criteria).'}
             </p>
             <p className="text-xs text-slate-600 mt-2">
-              * EMI figures are estimates. They assume repayment starts immediately on the loan amount and exclude interest during the study period (moratorium) and lender fees.
+              * EMI figures are estimates. They assume repayment starts immediately on the loan amount {assumptions.moratoriumEnabled ? 'but include' : 'and exclude'} interest during the study period (moratorium) and lender fees.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {nonCollateralResults.map((r, i) => (
-              <LenderCard key={i} result={r} gap={parsedGap} tenor={assumptions.tenorYears} />
+              <LenderCard key={i} result={r} gap={parsedGap} tenor={assumptions.tenorYears} moratorium={moratoriumYears} />
             ))}
           </div>
         </div>

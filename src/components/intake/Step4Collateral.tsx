@@ -84,7 +84,7 @@ export function Step4Collateral({ onNext, onBack }: { onNext: () => void, onBack
 
       <div className="flex justify-between pt-4 border-t">
         <Button variant="outline" onClick={onBack} className="rounded-full">Back</Button>
-        <Button onClick={onNext} className="rounded-full bg-[#333333]">View Results</Button>
+        <Button onClick={onNext} className="rounded-full bg-[#333333]">Next: Documents</Button>
       </div>
     </div>
   );
